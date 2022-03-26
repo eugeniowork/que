@@ -72,4 +72,21 @@ class Token_lib extends Controller
         return $token;   
     } 
 
+    public function generateToken(){
+        $lastToken = Token::whereDate('created_at', date("Y-m-d H:i:s"))
+            ->orderBy('token_no','desc')
+            ->value('token_no');
+
+        if(is_numeric($lastToken)){
+            $lastToken += 1;
+        }
+        else{
+            $lastToken = 1;
+        }
+
+        $lastToken = str_pad($lastToken, 3, '0', STR_PAD_LEFT);
+
+        return $lastToken;
+    }
+
 }

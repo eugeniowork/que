@@ -412,7 +412,7 @@ class TokenController extends Controller
         } 
         else 
         { 
-            $newTokenNo = (new Token_lib)->newToken($request->department_id, $request->counter_id, $request->is_vip);
+            $newTokenNo = (new Token_lib)->generateToken();
 
             if($request->register_type == "Student"){
                 $save = Token::insert([

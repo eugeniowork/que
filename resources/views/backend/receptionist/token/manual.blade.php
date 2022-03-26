@@ -171,9 +171,9 @@ $(document).ready(function(){
 
     $(".btn-reset").on("click", function(){
         $("input select").val("")
-        $('select option:selected').prop("selected", false)
-        $(this).find("select").prop('selectedIndex',0).end();
-        $(".register-type").change()
+        // $("select").prop('selectedIndex',0).end();
+        $("select").val(null).trigger("change");
+        //$(".register-type").change()
     })
 
     $('input[name=client_mobile]').on('keyup change', function(e){
@@ -234,18 +234,18 @@ $(document).ready(function(){
                     "}</style>";
                     
                 content += "<div class=\"receipt-token\">";
-                content += "<h4>{{ \Session::get('app.title') }}</h4>";
-                content += "<h1>"+data.token.token_no+"</h1>";
-                content +="<ul class=\"list-unstyled\">";
-                content += "<li><strong>{{ trans('app.department') }} </strong>"+data.token.department+"</li>";
-                content += "<li><strong>{{ trans('app.counter') }} </strong>"+data.token.counter+"</li>";
-                content += "<li><strong>{{ trans('app.officer') }} </strong>"+data.token.firstname+' '+data.token.lastname+"</li>";
-                if (data.token.note)
-                {
-                    content += "<li><strong>{{ trans('app.note') }} </strong>"+data.token.note+"</li>";
-                }
-                content += "<li><strong>{{ trans('app.date') }} </strong>"+data.token.created_at+"</li>";
-                content += "</ul>";  
+                //content += "<h4>{{ \Session::get('app.title') }}</h4>";
+                content += "<h1 style='font-size: 200px'>"+data.token.token_no+"</h1>";
+                // content +="<ul class=\"list-unstyled\">";
+                // content += "<li><strong>{{ trans('app.department') }} </strong>"+data.token.department+"</li>";
+                // content += "<li><strong>{{ trans('app.counter') }} </strong>"+data.token.counter+"</li>";
+                // content += "<li><strong>{{ trans('app.officer') }} </strong>"+data.token.firstname+' '+data.token.lastname+"</li>";
+                // if (data.token.note)
+                // {
+                //     content += "<li><strong>{{ trans('app.note') }} </strong>"+data.token.note+"</li>";
+                // }
+                // content += "<li><strong>{{ trans('app.date') }} </strong>"+data.token.created_at+"</li>";
+                // content += "</ul>";  
                 content += "</div>";    
  
                 // print 
