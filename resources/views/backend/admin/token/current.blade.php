@@ -210,18 +210,18 @@
                        "}</style>";
                        
                 content += "<div class=\"receipt-token\">";
-                content += "<h4>{{ \Session::get('app.title') }}</h4>";
-                content += "<h1>"+data.token_no+"</h1>";
-                content +="<ul class=\"list-unstyled\">";
-                content += "<li><strong>{{ trans('app.department') }} </strong>"+data.department+"</li>";
-                content += "<li><strong>{{ trans('app.counter') }} </strong>"+data.counter+"</li>";
-                content += "<li><strong>{{ trans('app.officer') }} </strong>"+data.firstname+' '+data.lastname+"</li>";
-                if (data.note)
-                {
-                    content += "<li><strong>{{ trans('app.note') }} </strong>"+data.note+"</li>";
-                }
-                content += "<li><strong>{{ trans('app.date') }} </strong>"+data.created_at+"</li>";
-                content += "</ul>";  
+                //content += "<h4>{{ \Session::get('app.title') }}</h4>";
+                content += "<h1 style='font-size: 200px'>"+data.token_no+"</h1>";
+                // content +="<ul class=\"list-unstyled\">";
+                // content += "<li><strong>{{ trans('app.department') }} </strong>"+data.department+"</li>";
+                // content += "<li><strong>{{ trans('app.counter') }} </strong>"+data.counter+"</li>";
+                // content += "<li><strong>{{ trans('app.officer') }} </strong>"+data.firstname+' '+data.lastname+"</li>";
+                // if (data.note)
+                // {
+                //     content += "<li><strong>{{ trans('app.note') }} </strong>"+data.note+"</li>";
+                // }
+                // content += "<li><strong>{{ trans('app.date') }} </strong>"+data.created_at+"</li>";
+                // content += "</ul>";  
                 content += "</div>";    
       
                 // print 
