@@ -27,11 +27,11 @@
                 <span class="text-danger">{{ $errors->first('description') }}</span> 
             </div>
 
-            <div class="form-group @error('key') has-error @enderror">
+            {{-- <div class="form-group @error('key') has-error @enderror">
                 <label for="key">{{ trans('app.key_for_keyboard_mode') }} <i class="text-danger">*</i></label><br/>
                 {{ Form::select('key', $keyList, null, ['placeholder' => trans('app.select_option'), 'class'=>'select2 form-control']) }}<br/>
                 <span class="text-danger">{{ $errors->first('key') }}</span>
-            </div>
+            </div> --}}
 
             <div class="form-group @error('status') has-error @enderror">
                 <label for="status">{{ trans('app.status') }} <i class="text-danger">*</i></label>
@@ -46,7 +46,7 @@
             </div>   
 
             <div class="form-group">
-                <button class="button btn btn-info" type="reset"><span>{{ trans('app.reset') }}</span></button>
+                {{-- <button class="button btn btn-info" type="reset"><span>{{ trans('app.reset') }}</span></button> --}}
                 <button class="button btn btn-success" type="submit"><span>{{ trans('app.save') }}</span></button>
             </div>
         {{ Form::close() }}

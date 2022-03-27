@@ -75,7 +75,7 @@
                     <div id="cm-menu-scroller">
                         <ul class="cm-menu-items">
                             <!-- // ADMIN MENU -->
-                            @if(Auth::user()->hasRole('admin')) 
+                            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('it assistant')) 
                                 <li class="{{ ((Request::is('admin')) ? 'active' : '') }}">
                                     <a href="{{ url('admin') }}" class="sf-dashboard">
                                         {{ trans('app.dashboard') }}
@@ -206,7 +206,7 @@
                             <!-------------------------------------------------------->
                             <!-- COMMON MENU                                        -->
                             <!-------------------------------------------------------->
-                            @if(Auth::user()->hasRole('officer') || Auth::user()->hasRole('admin'))  
+                            @if(Auth::user()->hasRole('officer') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('it assistant'))  
                                 <li class="cm-submenu {{ (Request::segment(2)=='display' ? 'open' : '') }}">
                                     <a target="_blank" class="sf-device-tablet">
                                         {{ trans('app.display') }} 
@@ -301,7 +301,7 @@
 
                 <!-- Buy Now -->
                 @yield('info.buy-now')
-                @if(Auth::user()->hasRole('officer') || Auth::user()->hasRole('admin'))  
+                @if(Auth::user()->hasRole('officer') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('it assistant'))  
                     <div class="dropdown pull-right">
                        <button class="btn btn-primary md-desktop-windows-white" data-toggle="dropdown"></button> 
                         <div class="popover cm-popover bottom">

@@ -19,15 +19,16 @@ class User extends Authenticatable
     protected $table = "user";
 
     protected $avaliableRoles = [
-        'Admin'   => '5',
-        'Officer' => '1',
-        'Receptionist' => '2',
-        'Client'  => '3',
+        'ADMIN'   => '5',
+        'OFFICER' => '1',
+        'RECEPTIONIST' => '2',
+        'CLIENT'  => '3',
+        'IT ASSISTANT'   => '6'
     ];
 
     public function hasRole($role)
     {  
-        return ($this->user_type == $this->avaliableRoles[ucfirst($role)]);
+        return ($this->user_type == $this->avaliableRoles[strtoupper($role)]);
     } 
 
     public function role()
@@ -40,7 +41,9 @@ class User extends Authenticatable
     {   
         $roles = array_flip($this->avaliableRoles);
         $list = $roles;
-        unset($list['5']); 
+        unset($list['1']); 
+        unset($list['2']); 
+        unset($list['3']); 
 
         return (!empty($user_type)?($roles[$user_type]):$list);
     } 

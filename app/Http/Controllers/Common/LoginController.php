@@ -66,6 +66,9 @@ class LoginController extends Controller
                 if($authUser->user_type == '2' || $authUser->user_type == '3'){
                     return redirect('receptionist/token/create');
                 }
+                else if($authUser->user_type == '6'){
+                    return redirect('admin');
+                }
                 else{
                     return redirect(strtolower(auth()->user()->role()));
                 }

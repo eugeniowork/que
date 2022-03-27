@@ -28,13 +28,13 @@ class DepartmentController extends Controller
         $validator = Validator::make($request->all(), [
             'name'        => 'required|unique:department,name|max:50',
             'description' => 'max:255',
-            'key'         => 'required|unique:department,key|max:1',
+            //'key'         => 'required|unique:department,key|max:1',
             'status'      => 'required',
         ])
         ->setAttributeNames(array(
            'name' => trans('app.name'),
            'description' => trans('app.description'),
-           'key' => trans('app.key_for_keyboard_mode'),
+           //'key' => trans('app.key_for_keyboard_mode'),
            'status' => trans('app.status')
         ));
 
@@ -47,7 +47,7 @@ class DepartmentController extends Controller
             $save = Department::insert([
                 'name'        => $request->name,
                 'description' => $request->description,
-                'key'         => $request->key,
+                //'key'         => $request->key,
                 'created_at'  => date('Y-m-d H:i:s'),
                 'updated_at'  => null,
                 'status'      => $request->status
@@ -79,13 +79,13 @@ class DepartmentController extends Controller
         $validator = Validator::make($request->all(), [
             'name'        => 'required|max:50|unique:department,name,'.$request->id,
             'description' => 'max:255',
-            'key'         => 'required|max:1|unique:department,key,'.$request->id,
+            //'key'         => 'required|max:1|unique:department,key,'.$request->id,
             'status'      => 'required',
         ])
         ->setAttributeNames(array(
            'name' => trans('app.name'),
            'description' => trans('app.description'),
-            'key' => trans('app.key_for_keyboard_mode'),
+            //'key' => trans('app.key_for_keyboard_mode'),
            'status' => trans('app.status')
         ));
 
@@ -99,7 +99,7 @@ class DepartmentController extends Controller
                 ->update([
                     'name'        => $request->name,
                     'description' => $request->description,
-                    'key'         => $request->key,
+                    //'key'         => $request->key,
                     'updated_at'  => date('Y-m-d H:i:s'),
                     'status'      => $request->status
                 ]);
