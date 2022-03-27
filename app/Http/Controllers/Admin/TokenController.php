@@ -473,20 +473,28 @@ class TokenController extends Controller
     public function current()
     {  
         @date_default_timezone_set(session('app.timezone'));
-        $tokens = Token::where('status', '0')
-        ->orderBy('is_vip', 'DESC')
-        ->orderBy('id', 'ASC')
-        ->get(); 
+        // $tokens = Token::where('status', '0')
+        // ->leftJoin('department', 'token.department_id', '=', 'department.id')
+        // ->orderBy('is_vip', 'DESC')
+        // ->orderBy('id', 'ASC')
+        // ->get(); 
 
-        $counters = Counter::where('status',1)->pluck('name','id');
-        $departments = Department::where('status',1)->pluck('name','id');
+        $tokens = Token::select('token.*', 'counter.name as counter_name', 'department.name as department_name')
+            ->leftJoin('counter', 'token.counter_id', '=', 'counter.id')
+            ->leftJoin('department', 'token.department_id', '=', 'department.id')
+            ->orderBy('is_vip', 'DESC')
+            ->orderBy('id', 'ASC')
+            ->get(); 
+
+        //$counters = Counter::where('status',1)->pluck('name','id');
+        //$departments = Department::where('status',1)->pluck('name','id');
         $officers = User::select(DB::raw('CONCAT(firstname, " ", lastname) as name'), 'id')
             ->where('user_type',1)
             ->where('status',1)
             ->orderBy('firstname', 'ASC')
             ->pluck('name', 'id'); 
 
-        return view('backend.admin.token.current', compact('counters', 'departments', 'officers', 'tokens'));
+        return view('backend.admin.token.current', compact('officers', 'tokens'));
     } 
 
     public function report(Request $request)

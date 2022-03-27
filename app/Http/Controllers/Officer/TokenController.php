@@ -173,8 +173,9 @@ class TokenController extends Controller
     public function current()
     {  
         @date_default_timezone_set(session('app.timezone'));
-        $tokens = Token::where('status', '0')
-            ->where('user_id', auth()->user()->id )
+        $tokens = Token::select('token.*', 'counter.name as counter_name', 'department.name as department_name')
+            ->leftJoin('counter', 'token.counter_id', '=', 'counter.id')
+            ->leftJoin('department', 'token.department_id', '=', 'department.id')
             ->orderBy('is_vip', 'DESC')
             ->orderBy('id', 'ASC')
             ->get(); 

@@ -7,7 +7,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-sm-12 text-left">
-                <h3>{{ trans('app.active') }} / {{ trans('app.todays_token') }}</h3>
+                <h3>Queuing</h3>
             </div> 
         </div>
     </div>
@@ -19,9 +19,9 @@
                     <th>#</th>
                     <th>{{ trans('app.token_no') }}</th>
                     <th>{{ trans('app.department') }}</th>
-                    <th>{{ trans('app.counter') }}</th>
-                    <th>{{ trans('app.client_mobile') }}</th>
-                    <th>{{ trans('app.note') }}</th>
+                    <th>Transaction</th>
+                    <th>Window</th>
+                    <th>Student ID</th>
                     <th>{{ trans('app.status') }}</th>
                     <th>{{ trans('app.created_by') }}</th>
                     <th>{{ trans('app.created_at') }}</th>
@@ -37,13 +37,19 @@
                             <td>
                                 {!! (!empty($token->is_vip)?("<span class=\"label label-danger\" title=\"VIP\">$token->token_no</span>"):$token->token_no) !!} 
                             </td>
-                            <td>{{ !empty($token->department)?$token->department->name:null }}</td>
-                            <td>{{ !empty($token->counter)?$token->counter->name:null }}</td> 
+                            <td>
+                                {{ $token->department_name }}
+                            </td>
+                            <td>
+                                {{ $token->counter_name }}
+                            </td>
+                            <td>
+                                {!! (!empty($token->officer)?("<a href='".url("admin/user/view/{$token->officer->id}")."'>".$token->officer->firstname." ". $token->officer->lastname."</a>"):null) !!}
+                            </td>
                             <td>
                                 {{ $token->client_mobile }}<br/>
-                                {!! (!empty($token->client)?("(<a href='".url("officer/user/view/{$token->client->id}")."'>".$token->client->firstname." ". $token->client->lastname."</a>)"):null) !!}
+                                {!! (!empty($token->client)?("(<a href='".url("admin/user/view/{$token->client->id}")."'>".$token->client->firstname." ". $token->client->lastname."</a>)"):null) !!}
                             </td>
-                            <td>{{ $token->note }}</td>
                             <td> 
                                 @if($token->status==0) 
                                 <span class="label label-primary">{{ trans('app.pending') }}</span> 

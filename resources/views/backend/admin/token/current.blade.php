@@ -7,7 +7,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-sm-12 text-left">
-                <h3>{{ trans('app.active') }} / {{ trans('app.todays_token') }}</h3>
+                <h3>Queuing</h3>
             </div> 
         </div>
     </div>
@@ -19,10 +19,9 @@
                     <th>#</th>
                     <th>{{ trans('app.token_no') }}</th>
                     <th>{{ trans('app.department') }}</th>
-                    <th>{{ trans('app.counter') }}</th>
-                    <th>{{ trans('app.officer') }}</th>
-                    <th>{{ trans('app.client_mobile') }}</th>
-                    <th>{{ trans('app.note') }}</th>
+                    <th>Transaction</th>
+                    <th>Window</th>
+                    <th>Student ID</th>
                     <th>{{ trans('app.status') }}</th>
                     <th>{{ trans('app.created_by') }}</th>
                     <th>{{ trans('app.created_at') }}</th>
@@ -38,8 +37,12 @@
                             <td>
                                 {!! (!empty($token->is_vip)?("<span class=\"label label-danger\" title=\"VIP\">$token->token_no</span>"):$token->token_no) !!} 
                             </td>
-                            <td>{{ !empty($token->department)?$token->department->name:null }}</td>
-                            <td>{{ !empty($token->counter)?$token->counter->name:null }}</td>
+                            <td>
+                                {{ $token->department_name }}
+                            </td>
+                            <td>
+                                {{ $token->counter_name }}
+                            </td>
                             <td>
                                 {!! (!empty($token->officer)?("<a href='".url("admin/user/view/{$token->officer->id}")."'>".$token->officer->firstname." ". $token->officer->lastname."</a>"):null) !!}
                             </td>
@@ -47,7 +50,6 @@
                                 {{ $token->client_mobile }}<br/>
                                 {!! (!empty($token->client)?("(<a href='".url("admin/user/view/{$token->client->id}")."'>".$token->client->firstname." ". $token->client->lastname."</a>)"):null) !!}
                             </td>
-                            <td>{{ $token->note }}</td>
                             <td> 
                                 @if($token->status==0) 
                                 <span class="label label-primary">{{ trans('app.pending') }}</span> 
@@ -63,11 +65,11 @@
                             <td>
                                 <div class="btn-group"> 
                                     <a href="{{ url("admin/token/complete/$token->id") }}"  class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')" title="Complete"><i class="fa fa-check"></i></a>
-                                    <button type="button" data-toggle="modal" data-target=".transferModal" data-token-id='{{ $token->id }}' class="btn btn-primary btn-sm" title="Transfer"><i class="fa fa-exchange"></i></button> 
+                                    {{-- <button type="button" data-toggle="modal" data-target=".transferModal" data-token-id='{{ $token->id }}' class="btn btn-primary btn-sm" title="Transfer"><i class="fa fa-exchange"></i></button>  --}}
 
-                                    <a href="{{ url("admin/token/stoped/$token->id") }}"  class="btn btn-warning btn-sm" onclick="return confirm('Are you sure?')" title="Stoped"><i class="fa fa-stop"></i></a>
+                                    {{-- <a href="{{ url("admin/token/stoped/$token->id") }}"  class="btn btn-warning btn-sm" onclick="return confirm('Are you sure?')" title="Stoped"><i class="fa fa-stop"></i></a> --}}
 
-                                    <button type="button" href='{{ url("admin/token/print") }}' data-token-id='{{ $token->id }}' class="tokenPrint btn btn-default btn-sm" title="Print" ><i class="fa fa-print"></i></button>
+                                    {{-- <button type="button" href='{{ url("admin/token/print") }}' data-token-id='{{ $token->id }}' class="tokenPrint btn btn-default btn-sm" title="Print" ><i class="fa fa-print"></i></button> --}}
 
                                     <a href='{{ url("admin/token/delete/$token->id") }}'class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');" title="Delete"><i class="fa fa-times"></i></a>
                                 </div>
@@ -81,7 +83,7 @@
 </div>  
 
 <!-- Transfer Modal -->
-<div class="modal fade transferModal" tabindex="-1" role="dialog" aria-labelledby="transferModalLabel">
+{{-- <div class="modal fade transferModal" tabindex="-1" role="dialog" aria-labelledby="transferModalLabel">
   <div class="modal-dialog" role="document">
     {{ Form::open(['url' => 'admin/token/transfer', 'class'=>'transferFrm']) }}
     <div class="modal-content">
@@ -114,7 +116,7 @@
     </div>
     {{ Form::close() }}
   </div>
-</div> 
+</div>  --}}
 @endsection
 
 @push("scripts")

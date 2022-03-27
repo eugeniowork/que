@@ -134,16 +134,16 @@
                                 </li> -->
 
                                 <li class="cm-submenu {{ (Request::segment(2)=='token' ? 'open' : '') }}">
-                                    <a class="sf-user-id">{{ trans('app.token') }} <span class="caret"></span></a>
+                                    <a class="sf-user-id">Queue<span class="caret"></span></a>
                                     <ul>
-                                        <li class="{{ (Request::is('admin/token/list') ? 'active' : '') }}">
+                                        {{-- <li class="{{ (Request::is('admin/token/list') ? 'active' : '') }}">
                                             <a href="{{ url('admin/token/auto') }}">{{ trans('app.auto_token') }}</a>
                                         </li>
                                         <li class="{{ (Request::is('admin/token/create') ? 'active' : '') }}">
                                             <a href="{{ url('admin/token/create') }}">{{ trans('app.manual_token') }}</a>
-                                        </li>
+                                        </li> --}}
                                         <li class="{{ (Request::is('admin/token/current') ? 'active' : '') }}">
-                                            <a href="{{ url('admin/token/current') }}">{{ trans('app.active') }} / {{ trans('app.todays_token') }} <i class="fa fa-dot-circle-o" style="color:#03d003"></i></a>
+                                            <a href="{{ url('admin/token/current') }}">Queuing <i class="fa fa-dot-circle-o" style="color:#03d003"></i></a>
                                         </li> 
                                         <li class="{{ (Request::is('admin/token/report') ? 'active' : '') }}">
                                             <a href="{{ url('admin/token/report') }}">{{ trans('app.token_report') }}</a>
@@ -170,14 +170,14 @@
                                 
 
                                 <li class="cm-submenu {{ (Request::segment(2)=='token' ? 'open' : '') }}">
-                                    <a class="sf-user-id">{{ trans('app.token') }} <span class="caret"></span></a>
+                                    <a class="sf-user-id">Queue<span class="caret"></span></a>
                                     <ul> 
                                         <li class="{{ (Request::is('officer/token/current') ? 'active' : '') }}">
-                                            <a href="{{ url('officer/token/current') }}">{{ trans('app.active') }} / {{ trans('app.todays_token') }} <i class="fa fa-dot-circle-o" style="color:#03d003"></i></a>
+                                            <a href="{{ url('officer/token/current') }}">Queuing <i class="fa fa-dot-circle-o" style="color:#03d003"></i></a>
                                         </li>
-                                        <li class="{{ (Request::is('officer/token') ? 'active' : '') }}">
+                                        {{-- <li class="{{ (Request::is('officer/token') ? 'active' : '') }}">
                                             <a href="{{ url('officer/token') }}">{{ trans('app.token_list') }}</a>
-                                        </li> 
+                                        </li> --}} 
                                     </ul>
                                 </li>  
                             @endif
@@ -339,7 +339,7 @@
                    <!-- <div class="dropdown pull-right">
                         <a href="{{ url('common/message/inbox') }}" class="btn btn-primary md-local-post-office-white"> <span class="label label-danger" id="message-notify">0</span> </a> 
                     </div> -->
-                    <div class="dropdown pull-right">
+                    {{-- <div class="dropdown pull-right">
                         <button class="btn btn-primary md-language-white" data-toggle="dropdown"> <span class="label label-danger">{{ Session::get('locale')? Session::get('locale'):'en' }}</span></button>
                         <div class="popover cm-popover bottom">
                             <div class="arrow"></div>
@@ -378,7 +378,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>  --}}
                 @endif
                 @if($user = Auth::user()) 
                 <div class="dropdown pull-right">
