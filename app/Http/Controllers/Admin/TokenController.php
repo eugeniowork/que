@@ -309,9 +309,26 @@ class TokenController extends Controller
             ->where('user_type',1)
             ->where('status',1)
             ->orderBy('firstname', 'ASC')
-            ->pluck('name', 'id'); 
+            ->pluck('name', 'id');
 
-        return view('backend.admin.token.manual', compact('display', 'counters', 'departments','officers' ));
+        $register_type = [
+            "Student" => "Student",
+            "Visitor" => "Visitor",
+            "Admin/Professor"=> "Admin/Professor"
+        ];
+
+        $course = [
+            "Computer Science"=> "Computer Science",
+            "Information Technology"=> "Information Technology",
+            "Accountancy"=> "Accountancy",
+            "Accounting Information Systems"=> "Accounting Information Systems",
+            "Elementary Education"=> "Elementary Education",
+            "Secondary Education (English Language Education)"=> "Secondary Education (English Language Education)",
+            "Secondary Education (Math Education)"=> "Secondary Education (Math Education)",
+            "Secondary Education (Science Education)"=> "Secondary Education (Science Education)"
+        ];
+
+        return view('backend.admin.token.manual', compact('display', 'counters', 'departments','officers', 'register_type', 'course'  ));
     }  
 
     public function create(Request $request)
@@ -320,41 +337,56 @@ class TokenController extends Controller
         
         $display = DisplaySetting::first();
 
-        if ($display->sms_alert)
-        {
-            $validator = Validator::make($request->all(), [
-                'client_mobile' => 'required',
-                'department_id' => 'required|max:11',
+        if($request->register_type == ""){
+            $validator_fields = [
+                'register_type' => 'required'
+            ];
+
+            $attibute_names = [
+                'register_type' => trans('app.register_type')
+            ];
+        }
+        else{
+            $validator_fields = [
+                'register_type' => 'required',
                 'counter_id'    => 'required|max:11',
                 'user_id'       => 'required|max:11',
                 'note'          => 'max:512',
-                'is_vip'        => 'max:1'
-            ])
-            ->setAttributeNames(array(
-               'client_mobile' => trans('app.client_mobile'),
-               'department_id' => trans('app.department'),
-               'counter_id'    => trans('app.counter'),
-               'user_id'       => trans('app.officer'), 
-               'note'          => trans('app.note'),
-               'is_vip'        => trans('app.is_vip'), 
-            ));  
+                'is_vip'        => 'max:1',
+                'lastname'      => 'required',
+                'firstname'     => 'required',
+            ];
+
+            $attibute_names = [
+                'register_type' => trans('app.register_type'),
+                'counter_id'    => trans('app.counter'),
+                'user_id'       => trans('app.officer'), 
+                'note'          => trans('app.note'),
+                'is_vip'        => trans('app.is_vip'), 
+                'lastname'        => trans('app.lastname'), 
+                'firstname'        => trans('app.firstname'), 
+            ];
+
+            if($request->register_type == "Student"){
+                $validator_fields["course"] = "required";
+                $validator_fields["client_mobile"] = "required";
+                $validator_fields["department_id"] = "required|max:11";
+
+                $attibute_names["course"] = trans('app.course');
+                $attibute_names["client_mobile"] = trans('app.client_mobile');
+                $attibute_names["department_id"] = trans('app.department');
+            }
+        }
+
+        if ($display->sms_alert)
+        {
+            $validator = Validator::make($request->all(), $validator_fields)
+            ->setAttributeNames($attibute_names);  
         }
         else
         {
-            $validator = Validator::make($request->all(), [
-                'department_id' => 'required|max:11',
-                'counter_id'    => 'required|max:11',
-                'user_id'       => 'required|max:11',
-                'note'          => 'max:512',
-                'is_vip'        => 'max:1'
-            ])
-            ->setAttributeNames(array( 
-               'department_id' => trans('app.department'),
-               'counter_id'    => trans('app.counter'),
-               'user_id'       => trans('app.officer'),
-               'note'          => trans('app.note'),
-               'is_vip'        => trans('app.is_vip'), 
-            )); 
+            $validator = Validator::make($request->all(), $validator_fields)
+            ->setAttributeNames($attibute_names); 
         }
 
         if ($validator->fails()) 
@@ -370,21 +402,43 @@ class TokenController extends Controller
         } 
         else 
         { 
-            $newTokenNo = (new Token_lib)->newToken($request->department_id, $request->counter_id, $request->is_vip);
+            $newTokenNo = (new Token_lib)->generateToken();
 
-            $save = Token::insert([
-                'token_no'      => $newTokenNo,
-                'client_mobile' => $request->client_mobile,
-                'department_id' => $request->department_id,
-                'counter_id'    => $request->counter_id, 
-                'user_id'       => $request->user_id, 
-                'note'          => $request->note, 
-                'created_by'    => auth()->user()->id,
-                'created_at'    => date('Y-m-d H:i:s'),
-                'updated_at'    => null,
-                'is_vip'        => $request->is_vip, 
-                'status'        => 0 
-            ]);
+            if($request->register_type == "Student"){
+                $save = Token::insert([
+                    'token_no'      => $newTokenNo,
+                    'client_mobile' => $request->client_mobile,
+                    'firstname'     => $request->firstname,
+                    'lastname'      => $request->lastname,
+                    'course'        => $request->course,
+                    'department_id' => $request->department_id,
+                    'counter_id'    => $request->counter_id, 
+                    'user_id'       => $request->user_id, 
+                    'note'          => $request->note, 
+                    'type'          => $request->register_type,
+                    'created_by'    => auth()->user()->id,
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'updated_at'    => null,
+                    'is_vip'        => $request->is_vip, 
+                    'status'        => 0 
+                ]);
+            }
+            else{
+                $save = Token::insert([
+                    'token_no'      => $newTokenNo,
+                    'firstname'     => $request->firstname,
+                    'lastname'      => $request->lastname,
+                    'counter_id'    => $request->counter_id, 
+                    'user_id'       => $request->user_id, 
+                    'note'          => $request->note, 
+                    'type'          => $request->register_type,
+                    'created_by'    => auth()->user()->id,
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'updated_at'    => null,
+                    'is_vip'        => $request->is_vip, 
+                    'status'        => 0 
+                ]);
+            }
 
             if ($save) { 
                 $token = Token::select(

@@ -63,7 +63,7 @@ class LoginController extends Controller
             } 
             else if (!empty($authUser->user_type)) 
             {
-                if($authUser->user_type == '2'){
+                if($authUser->user_type == '2' || $authUser->user_type == '3'){
                     return redirect('receptionist/token/create');
                 }
                 else{

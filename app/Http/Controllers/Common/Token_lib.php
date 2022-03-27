@@ -73,7 +73,7 @@ class Token_lib extends Controller
     } 
 
     public function generateToken(){
-        $lastToken = Token::whereDate('created_at', date("Y-m-d H:i:s"))
+        $lastToken = Token::whereDate('created_at', date("Y-m-d"))
             ->orderBy('token_no','desc')
             ->value('token_no');
 

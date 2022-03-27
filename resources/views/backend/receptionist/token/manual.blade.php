@@ -138,7 +138,6 @@
 $(document).ready(function(){
     var officers = JSON.parse('<?php echo $officers ?>');
     
-
     $(".register-type").on("change", function(e){
         $(".for-student").hide();
         $(".form-non-student").hide();
