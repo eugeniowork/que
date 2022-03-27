@@ -18,6 +18,8 @@
                 <tr>
                     <th>#</th>
                     <th>{{ trans('app.token_no') }}</th>
+                    <th>Name</th>
+                    <th>Course</th>
                     <th>{{ trans('app.department') }}</th>
                     <th>Transaction</th>
                     <th>Window</th>
@@ -36,6 +38,12 @@
                             <td>{{ $sl++ }}</td>
                             <td>
                                 {!! (!empty($token->is_vip)?("<span class=\"label label-danger\" title=\"VIP\">$token->token_no</span>"):$token->token_no) !!} 
+                            </td>
+                            <td>
+                                {{ $token->firstname." ".$token->lastname }}
+                            </td>
+                            <td>
+                                {{ $token->counter_name }}
                             </td>
                             <td>
                                 {{ $token->department_name }}
@@ -83,6 +91,11 @@
 @push("scripts")
 <script type="text/javascript">
 (function() {
+    $('.datatable').DataTable({
+        order: [ [7, 'desc'] ],
+        bDestroy: true
+    })
+
     if (window.addEventListener) {
         window.addEventListener("load", loadHandler, false);
     }

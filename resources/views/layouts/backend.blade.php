@@ -146,7 +146,7 @@
                                             <a href="{{ url('admin/token/current') }}">Queuing <i class="fa fa-dot-circle-o" style="color:#03d003"></i></a>
                                         </li> 
                                         <li class="{{ (Request::is('admin/token/report') ? 'active' : '') }}">
-                                            <a href="{{ url('admin/token/report') }}">{{ trans('app.token_report') }}</a>
+                                            <a href="{{ url('admin/token/report') }}">Summary Reports</a>
                                         </li> 
                                         <li class="{{ (Request::is('admin/token/performance') ? 'active' : '') }}">
                                             <a href="{{ url('admin/token/performance') }}">{{ trans('app.performance_report') }}</a>

@@ -6,7 +6,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-sm-12 text-left">
-                <h3>{{ trans('app.token_report') }}</h3>
+                <h3>Summary Reports</h3>
             </div> 
         </div>
     </div> 
@@ -24,11 +24,13 @@
                         <label>{{ trans('app.end_date') }}</label><br/>
                         <input type="text" class="datepicker form-control input-sm filter" id="end_date" placeholder="{{ trans('app.end_date') }}" autocomplete="off" style="width:100px"/>
                     </td>
-                    <th colspan="10">
+                    <th colspan="12">
                         
                     </th>
                 </tr> 
                 <tr>
+                    <th></th>
+                    <th></th>
                     <th></th>
                     <th> 
                         {{ Form::select('department', $departments, null, ['id'=>'department', 'class'=>'select2 filter', 'placeholder'=> trans('app.department')]) }} 
@@ -40,27 +42,29 @@
                         {{ Form::select('officer', $officers, null, ['id'=>'officer', 'class'=>'select2 filter', 'placeholder'=> trans('app.officer')]) }} 
                     </th>  
                     <th></th>
-                    <th></th>
+                    {{-- <th></th> --}}
                     <th> 
                         {{ Form::select('status', ["'0'"=>trans("app.pending"), '1'=>trans("app.complete"), '2'=>trans("app.stop")],  null,  ['placeholder' => trans("app.status"), 'id'=> 'status', 'class'=>'select2 filter']) }} 
                     </th>  
                     <th></th>
                     <th></th>
-                    <th></th>
+                    {{-- <th></th> --}}
                     <th></th>
                     <th></th>
                 </tr> 
                 <tr>
-                    <th>{{ trans('app.token_no') }}</th> 
+                    <th>Queue No</th> 
+                    <th>Name</th> 
+                    <th>Course</th> 
                     <th>{{ trans('app.department') }}</th>
-                    <th>{{ trans('app.counter') }}</th>
-                    <th>{{ trans('app.officer') }}</th>
+                    <th>Transaction</th>
+                    <th>Window</th>
                     <th>{{ trans('Student ID') }}</th>
-                    <th>{{ trans('app.note') }}</th> 
+                    {{-- <th>{{ trans('app.note') }}</th>  --}}
                     <th>{{ trans('app.status') }}</th>
                     <th>{{ trans('app.created_by') }}</th>
                     <th>{{ trans('app.created_at') }}</th>
-                    <th>{{ trans('app.updated_at') }}</th>
+                    {{-- <th>{{ trans('app.updated_at') }}</th> --}}
                     <th>{{ trans('app.complete_time') }}</th>
                     <th>{{ trans('app.action') }}</th>
                 </tr> 
@@ -143,25 +147,34 @@
             columns: [ 
                 { data: 'serial' },
                 { data: 'token_no' },
+                { 
+                    data: '', 
+                    "render": function(data, type, full, meta) {
+                        var html = full.firstname+" "+full.lastname;
+
+                        return html;
+                    }
+                },
+                { data: 'course' },
                 { data: 'department' },
                 { data: 'counter' },
                 { data: 'officer' },
                 { data: 'client_mobile' }, 
-                { data: 'note' }, 
+                // { data: 'note' }, 
                 { data: 'status' }, 
                 { data: 'created_by' },
                 { data: 'created_at' },
-                { data: 'updated_at' }, 
+                // { data: 'updated_at' }, 
                 { data: 'complete_time' },
                 { data: 'options' }  
             ],  
-            order: [ [0, 'desc'] ], 
+            order: [ [7, 'asc'] ], 
             select    : true,
             pagingType: "full_numbers",
-            lengthMenu: [[25, 50, 100, 150, 200, 500, -1], [25, 50, 100, 150, 200, 500, "All"]],
+            lengthMenu: [[10,25, 50, 100, 150, 200, 500, -1], [10,25, 50, 100, 150, 200, 500, "All"]],
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>><'row'<'col-sm-12't>><'row'<'col-sm-6'i><'col-sm-6'p>>", 
             columnDefs: [
-                { "orderable": false, "targets": [12] }
+                { "orderable": false, "targets": [11] }
             ], 
             buttons: [
                 { extend:'copy', text:'<i class="fa fa-copy"></i>', className:'btn-sm',exportOptions:{columns:':visible'}},
@@ -170,7 +183,8 @@
                 { extend:'excel',  text:'<i class="fa fa-file-excel-o"></i>', className:'btn-sm',exportOptions:{columns:':visible'}},
                 { extend:'pdf',  text:'<i class="fa fa-file-pdf-o"></i>',  className:'btn-sm',exportOptions:{columns:':visible'}},
                 { extend:'colvis', text:'<i class="fa fa-eye"></i>',className:'btn-sm'} 
-            ] 
+            ],
+            scrollX: true
         });   
     } 
 
@@ -247,18 +261,18 @@
                        ".receipt-token ul{margin:0;padding:0;font-size:7vw;line-height:8vw;text-align:center;list-style:none;}"+
                        "}</style>";
                 content += "<div class=\"receipt-token\">";
-                content += "<h4>{{ \Session::get('app.title') }}</h4>";
-                content += "<h1>"+data.token_no+"</h1>";
-                content +="<ul class=\"list-unstyled\">";
-                content += "<li><strong>{{ trans('app.department') }} </strong>"+data.department+"</li>";
-                content += "<li><strong>{{ trans('app.counter') }} </strong>"+data.counter+"</li>";
-                content += "<li><strong>{{ trans('app.officer') }} </strong>"+data.firstname+' '+data.lastname+"</li>";
-                if (data.note)
-                {
-                    content += "<li><strong>{{ trans('app.note') }} </strong>"+data.note+"</li>";
-                }
-                content += "<li><strong>{{ trans('app.date') }} </strong>"+data.created_at+"</li>";
-                content += "</ul>";  
+                // content += "<h4>{{ \Session::get('app.title') }}</h4>";
+                content += "<h1 style='font-size: 200px'>"+data.token_no+"</h1>";
+                // content +="<ul class=\"list-unstyled\">";
+                // content += "<li><strong>{{ trans('app.department') }} </strong>"+data.department+"</li>";
+                // content += "<li><strong>{{ trans('app.counter') }} </strong>"+data.counter+"</li>";
+                // content += "<li><strong>{{ trans('app.officer') }} </strong>"+data.firstname+' '+data.lastname+"</li>";
+                // if (data.note)
+                // {
+                //     content += "<li><strong>{{ trans('app.note') }} </strong>"+data.note+"</li>";
+                // }
+                // content += "<li><strong>{{ trans('app.date') }} </strong>"+data.created_at+"</li>";
+                // content += "</ul>";  
                 content += "</div>";    
      
                 // print 

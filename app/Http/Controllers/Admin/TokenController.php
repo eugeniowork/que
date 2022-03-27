@@ -483,7 +483,9 @@ class TokenController extends Controller
             ->leftJoin('counter', 'token.counter_id', '=', 'counter.id')
             ->leftJoin('department', 'token.department_id', '=', 'department.id')
             ->orderBy('is_vip', 'DESC')
+            ->orderBy('status', 'ASC')
             ->orderBy('id', 'ASC')
+            
             ->get(); 
 
         //$counters = Counter::where('status',1)->pluck('name','id');
@@ -625,12 +627,13 @@ class TokenController extends Controller
                     $options .= "<a href=\"".url("admin/token/recall/$token->id")."\"  class=\"btn btn-info btn-sm\" onclick=\"return confirm('Are you sure?')\" title=\"Re-call\"><i class=\"fa fa-phone\"></i></a>";
                 }
                 if ($token->status == 0) {
-                    $options .= "<button type=\"button\" data-toggle=\"modal\" data-target=\".transferModal\" data-token-id='{$token->id}' class=\"btn btn-primary btn-sm\" title=\"Transfer\"><i class=\"fa fa-exchange\"></i></button> 
-                        <a href=\"". url("admin/token/stoped/$token->id")."\"  class=\"btn btn-warning btn-sm\" onclick=\"return confirm('Are you sure?')\" title=\"Stoped\"><i class=\"fa fa-stop\"></i></a>";
+                    // $options .= "<button type=\"button\" data-toggle=\"modal\" data-target=\".transferModal\" data-token-id='{$token->id}' class=\"btn btn-primary btn-sm\" title=\"Transfer\"><i class=\"fa fa-exchange\"></i></button> 
+                    //     <a href=\"". url("admin/token/stoped/$token->id")."\"  class=\"btn btn-warning btn-sm\" onclick=\"return confirm('Are you sure?')\" title=\"Stoped\"><i class=\"fa fa-stop\"></i></a>";
                 } 
 
-                $options .= "<button type=\"button\" href=\"".url("admin/token/print")."\" data-token-id='$token->id' class=\"tokenPrint btn btn-default btn-sm\" title=\"Print\"><i class=\"fa fa-print\"></i></button>
-                    <a href=\"".url("admin/token/delete/$token->id")."\" class=\"btn btn-danger btn-sm\" onclick=\"return confirm('Are you sure?');\" title=\"Delete\"><i class=\"fa fa-times\"></i></a>"; 
+                // $options .= "<button type=\"button\" href=\"".url("admin/token/print")."\" data-token-id='$token->id' class=\"tokenPrint btn btn-default btn-sm\" title=\"Print\"><i class=\"fa fa-print\"></i></button>
+                //     <a href=\"".url("admin/token/delete/$token->id")."\" class=\"btn btn-danger btn-sm\" onclick=\"return confirm('Are you sure?');\" title=\"Delete\"><i class=\"fa fa-times\"></i></a>"; 
+                $options .= "<a href=\"".url("admin/token/delete/$token->id")."\" class=\"btn btn-danger btn-sm\" onclick=\"return confirm('Are you sure?');\" title=\"Delete\"><i class=\"fa fa-times\"></i></a>"; 
                 $options .= "</div>"; 
 
                 $data[] = [
@@ -641,12 +644,14 @@ class TokenController extends Controller
                     'officer'    => (!empty($token->officer)?("<a href='".url("admin/user/view/{$token->officer->id}")."'>".$token->officer->firstname." ". $token->officer->lastname."</a>"):null),
 
                     'client_mobile'    => $token->client_mobile. "<br/>" .(!empty($token->client)?("(<a href='".url("admin/user/view/{$token->client->id}")."'>".$token->client->firstname." ". $token->client->lastname."</a>)"):null),
-
-                    'note'       => $token->note,
+                    'firstname' => (!empty($token->firstname)? $token->firstname: null),
+                    'lastname' => (!empty($token->lastname)? $token->lastname: null),
+                    'course' => (!empty($token->course)? $token->course: null),
+                    // 'note'       => $token->note,
                     'status'     => (($token->status==1)?("<span class='label label-success'>".trans('app.complete')."</span>"):(($token->status==2)?"<span class='label label-danger'>".trans('app.stop')."</span>":"<span class='label label-primary'>".trans('app.pending')."</span>")).(!empty($token->is_vip)?('<span class="label label-danger" title="VIP">VIP</span>'):''),
                     'created_by'    => (!empty($token->generated_by)?("<a href='".url("admin/user/view/{$token->generated_by->id}")."'>".$token->generated_by->firstname." ". $token->generated_by->lastname."</a>"):null),
                     'created_at' => (!empty($token->created_at)?date('j M Y h:i a',strtotime($token->created_at)):null),
-                    'updated_at' => (!empty($token->updated_at)?date('j M Y h:i a',strtotime($token->updated_at)):null),
+                    // 'updated_at' => (!empty($token->updated_at)?date('j M Y h:i a',strtotime($token->updated_at)):null),
                     'complete_time' => $complete_time,
                     'options'    => $options
                 ];  

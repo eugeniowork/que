@@ -94,8 +94,7 @@ Route::group(['middleware' => ['auth']], function() {
 	# -----------------------------------------------------------
 	Route::prefix('admin')
 	    ->namespace('Admin')
-	    ->middleware('roles:admin')
-	    ->middleware('roles:it assistant')
+	    ->middleware('roles:admin, it assistant')
 	    ->group(function() { 
 		# home
 		Route::get('/', 'HomeController@home');

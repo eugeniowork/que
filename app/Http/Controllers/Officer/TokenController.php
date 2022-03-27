@@ -177,6 +177,7 @@ class TokenController extends Controller
             ->leftJoin('counter', 'token.counter_id', '=', 'counter.id')
             ->leftJoin('department', 'token.department_id', '=', 'department.id')
             ->orderBy('is_vip', 'DESC')
+            ->orderBy('status', 'ASC')
             ->orderBy('id', 'ASC')
             ->get(); 
 
