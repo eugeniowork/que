@@ -679,6 +679,46 @@ class TokenController extends Controller
         $start_date = date('Y-m-d', strtotime($request->start_date));
         $end_date   = date('Y-m-d', strtotime($request->end_date)); 
     
+        // $tokens = DB::select("
+        //  SELECT 
+        //     realToken.user_id AS uid,
+        //   (SELECT CONCAT_WS(' ', firstname, lastname) FROM user WHERE id= realToken.user_id) as officer,
+        //   (
+        //     SELECT COUNT(id) 
+        //     FROM token 
+        //     WHERE 
+        //         user_id=realToken.user_id
+        //         AND (DATE(created_at) BETWEEN '".$start_date."' AND '".$end_date."')
+        //   ) AS total,
+          
+        //   (
+        //     SELECT COUNT(id) 
+        //     FROM token 
+        //     WHERE 
+        //         status = 2 
+        //         AND user_id=realToken.user_id
+        //         AND (DATE(created_at) BETWEEN '".$start_date."' AND '".$end_date."')
+        //   ) AS stoped,
+        //   (
+        //     SELECT COUNT(id) 
+        //     FROM token 
+        //     WHERE 
+        //         status = 1 
+        //         AND user_id=realToken.user_id
+        //         AND (DATE(created_at) BETWEEN '".$start_date."' AND '".$end_date."')
+        //   ) AS success,
+        //   (
+        //     SELECT COUNT(id)
+        //     FROM token 
+        //     WHERE 
+        //         status = 0 
+        //         AND user_id=realToken.user_id
+        //         AND (DATE(created_at) BETWEEN '".$start_date."' AND '".$end_date."')
+        //   ) AS pending
+        //   FROM 
+        //     token AS realToken
+        //   GROUP BY user_id
+        // ");
         $tokens = DB::select("
          SELECT 
             realToken.user_id AS uid,
@@ -689,16 +729,8 @@ class TokenController extends Controller
             WHERE 
                 user_id=realToken.user_id
                 AND (DATE(created_at) BETWEEN '".$start_date."' AND '".$end_date."')
+                AND (status != 2)
           ) AS total,
-          
-          (
-            SELECT COUNT(id) 
-            FROM token 
-            WHERE 
-                status = 2 
-                AND user_id=realToken.user_id
-                AND (DATE(created_at) BETWEEN '".$start_date."' AND '".$end_date."')
-          ) AS stoped,
           (
             SELECT COUNT(id) 
             FROM token 

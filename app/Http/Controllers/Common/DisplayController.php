@@ -5,7 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;  
 use App\Models\DisplaySetting; 
 use App\Models\DisplayCustom; 
-use App\Models\Setting;  
+use App\Models\Setting; 
+use App\Models\User;
+use App\Models\Token;
 use DB, Response, Validator;
 
 
@@ -21,6 +23,8 @@ class DisplayController extends Controller
         date_default_timezone_set(session('app.timezone')?session('app.timezone'):$setting->timezone);
 
         $setting->display = request()->get('type')?request()->get('type'):$setting->display;
+
+        $date = date("$setting->date_format $setting->time_format");
 
         if ($setting->display==6)
         {
@@ -54,8 +58,40 @@ class DisplayController extends Controller
         else
         {
             //general display - sequential 
-            return view('backend.common.display.display', compact('setting'));
+            //return view('backend.common.display.display', compact('setting'));
+            return view('backend.common.display.display_waiting', compact('setting','appSetting', 'windows', 'date'));
         }
+    }
+
+    public function display_waiting(Request $request){
+
+        $windows = User::select(DB::raw('CONCAT(firstname, " ", lastname) as name'), 'id')
+            ->where('user_type',1)
+            ->where('status',1)
+            ->orderBy('firstname', 'ASC')
+            ->pluck('name', 'id');
+
+        $waiting_list = [];
+        foreach($windows as $key => $window){
+
+            $queues = Token::select(DB::raw('id, token_no'))
+                ->where('user_id', $key)
+                ->where('status', 0)
+                ->orderBy('id', 'ASC')
+                ->limit(12)
+                ->pluck('token_no', 'id');
+
+            if(count($queues)){
+                $waiting_list[] = [
+                    'window'=> strtoupper($window),
+                    'queues'=> $queues
+                ];
+            }
+        }
+        $data['waiting_list'] = $waiting_list;
+        $data['interval']   = 10000;
+
+        return Response::json($data);
     }
 
     public function display1(Request $request)
@@ -128,7 +164,7 @@ class DisplayController extends Controller
                     $result .= "<div class=\"col-sm-12\"> 
                         <div class=\"queue well text-center \" style=\"height:60px;padding:0;text-align:center;font-size:25px;line-height:60px;margin-bottom:2px;background:#222;color:#fff\">
                             <strong style=\" padding-left:15px; height:58px;float:left;\">".explode(' ', trans('app.waiting_1'))[0]."</strong>
-                            <strong style=\"display:inline-block;\">".trans('app.token')."
+                            <strong style=\"display:inline-block;\">Queue No
                             </strong>
                         </div>
                     </div>";

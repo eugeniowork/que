@@ -18,6 +18,12 @@
          
         <!-- Jquery  -->
         <script src="{{ asset('public/assets/js/jquery.min.js') }}"></script>
+
+        <style type="text/css">
+          #fullscreen{
+            background: white !important;
+          }
+        </style>
     </head>
     <body class="cm-no-transition cm-1-navbar loader-process">
         <div class="loader">

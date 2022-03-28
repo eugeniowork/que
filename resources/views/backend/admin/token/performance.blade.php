@@ -28,13 +28,13 @@
                         <input type="text" name="end_date" value="{{$report->end_date}}" class="datepicker form-control input-sm" id="end_date" placeholder="{{ trans('app.end_date') }}" autocomplete="off" style="width:100px" />
                     </td> 
                     <th colspan="3">
-                        <button class="button btn btn-sm btn-success" type="submit">{{ trans('app.request') }}</button>
+                        <button class="button btn btn-sm btn-success" type="submit">Filter</button>
                     </th>
                 </tr> 
                 <tr>
-                    <th>{{ trans('app.officer') }}</th>
+                    <th>Window</th>
                     <th>Total</th>
-                    <th>Stoped</th>
+                    {{-- <th>Stoped</th> --}}
                     <th>Pending</th>
                     <th>Complete</th>
                 </tr>  
@@ -53,13 +53,13 @@
                             <td>{{ $sl++ }}</td>
                             <td><a href='{{url("admin/user/view/{$token->uid}")}}'>{{$token->officer}}</a></td>
                             <td>{{ $token->total }}</td> 
-                            <td>{{ $token->stoped }}</td> 
+                            {{-- <td>{{ $token->stoped }}</td>  --}}
                             <td>{{ $token->pending }}</td>  
                             <td>{{ $token->success }}</td>
                         </tr> 
                         <?php 
                             $grand_total   += $token->total;
-                            $total_stoped  += $token->stoped;
+                            //$total_stoped  += $token->stoped;
                             $total_pending += $token->pending;
                             $total_success += $token->success;
                         ?>
@@ -76,7 +76,7 @@
                         <strong>{{ trans('app.end_date') }}</strong>&nbsp; : {{ (!empty($report->end_date)?date('j M Y h:i a',strtotime($report->end_date)):null) }}<br/>
                     </th>
                     <th>{{ $grand_total }}</th> 
-                    <th>{{ $total_stoped }}</th> 
+                    {{-- <th>{{ $total_stoped }}</th>  --}}
                     <th>{{ $total_pending }}</th>  
                     <th>{{ $total_success }}</th>
                 </tr>  

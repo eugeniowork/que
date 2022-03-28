@@ -151,9 +151,9 @@
                                         <li class="{{ (Request::is('admin/token/performance') ? 'active' : '') }}">
                                             <a href="{{ url('admin/token/performance') }}">{{ trans('app.performance_report') }}</a>
                                         </li> 
-                                        <li class="bg-danger {{ (Request::is('admin/token/setting') ? 'active' : '') }}">
+                                        {{-- <li class="bg-danger {{ (Request::is('admin/token/setting') ? 'active' : '') }}">
                                             <a href="{{ url('admin/token/setting') }}">{{ trans('app.auto_token_setting') }}</a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </li>  
                             @endif
@@ -214,17 +214,17 @@
                                     </a>
                                     <ul>
                                         <li class="{{ (session()->get('app.display')==1 ? 'active' : '') }}">
-                                            <a href="{{ url('common/display?type=1') }}" target="_blank">{{ trans('app.display_1') }}</a>
+                                            <a href="{{ url('common/display?type=1') }}" target="_blank">Display 1 - Waiting</a>
                                         </li> 
                                         <li class="{{ (session()->get('app.display')==2 ? 'active' : '') }}">
-                                            <a href="{{ url('common/display?type=2') }}" target="_blank">{{ trans('app.display_2') }}</a>
+                                            <a href="{{ url('common/display?type=2') }}" target="_blank">Display 2 - Now Serving</a>
                                         </li> 
-                                        <li class="{{ (session()->get('app.display')==3 ? 'active' : '') }}">
+                                        {{-- <li class="{{ (session()->get('app.display')==3 ? 'active' : '') }}">
                                             <a href="{{ url('common/display?type=3') }}" target="_blank">{{ trans('app.display_3') }}</a>
                                         </li> 
                                         <li class="{{ (session()->get('app.display')==4 ? 'active' : '') }}">
                                             <a href="{{ url('common/display?type=4') }}" target="_blank">{{ trans('app.display_4') }}</a>
-                                        </li> 
+                                        </li>  --}}
                                         <!-- <li class="{{ (session()->get('app.display')==5 ? 'active' : '') }}"> */
                                             <a href="{{ url('common/display?type=5') }}" target="_blank">{{ trans('app.display_5') }}</a>
                                         </li>   -->
@@ -309,17 +309,17 @@
                             <div class="popover-content">
                                 <div class="list-group"> 
                                     <a href="{{ url('common/display?type=1') }}" target="_blank" class="{{session()->get('app.display')==1?'active':null}} list-group-item">
-                                        <h4 class="list-group-item-heading"></i> {{ trans('app.display_1') }}</h4>
+                                        <h4 class="list-group-item-heading"></i>Display 1 - Waiting</h4>
                                     </a>
                                     <a href="{{ url('common/display?type=2') }}" target="_blank" class="{{session()->get('app.display')==2?'active':null}} list-group-item">
-                                        <h4 class="list-group-item-heading"></i> {{ trans('app.display_2') }}</h4>
+                                        <h4 class="list-group-item-heading"></i>Display 2 - Now Serving</h4>
                                     </a>
-                                    <a href="{{ url('common/display?type=3') }}" target="_blank" class="{{session()->get('app.display')==3?'active':null}} list-group-item">
+                                    {{-- <a href="{{ url('common/display?type=3') }}" target="_blank" class="{{session()->get('app.display')==3?'active':null}} list-group-item">
                                         <h4 class="list-group-item-heading"></i> {{ trans('app.display_3') }}</h4>
                                     </a>
                                     <a href="{{ url('common/display?type=4') }}" target="_blank" class="{{session()->get('app.display')==4?'active':null}} list-group-item">
                                         <h4 class="list-group-item-heading"></i> {{ trans('app.display_4') }}</h4>
-                                    </a>
+                                    </a> --}}
                                     <!--<a href="{{ url('common/display?type=5') }}" target="_blank" class="{{session()->get('app.display')==5?'active':null}} list-group-item">
                                         <h4 class="list-group-item-heading"></i> {{ trans('app.display_5') }}</h4>
                                     </a> -->

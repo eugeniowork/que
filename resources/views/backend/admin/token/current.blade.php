@@ -60,11 +60,13 @@
                             </td>
                             <td> 
                                 @if($token->status==0) 
-                                <span class="label label-primary">{{ trans('app.pending') }}</span> 
+                                    <span class="label label-primary">{{ trans('app.pending') }}</span> 
                                 @elseif($token->status==1)   
-                                <span class="label label-success">{{ trans('app.complete') }}</span>
-                                @elseif($token->status==2) 
-                                <span class="label label-danger">{{ trans('app.stop') }}</span>
+                                    <span class="label label-success">Now Serving</span>
+                                @elseif($token->status==2)   
+                                    <span class="label label-success">{{ trans('app.complete') }}</span>
+                                @elseif($token->status==3) 
+                                    <span class="label label-danger">{{ trans('app.stop') }}</span>
                                 @endif
                                 {!! (!empty($token->is_vip)?('<span class="label label-danger" title="VIP">VIP</span>'):'') !!}
                             </td>
@@ -72,7 +74,12 @@
                             <td>{{ (!empty($token->created_at)?date('j M Y h:i a',strtotime($token->created_at)):null) }}</td>
                             <td>
                                 <div class="btn-group"> 
-                                    <a href="{{ url("admin/token/complete/$token->id") }}"  class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')" title="Complete"><i class="fa fa-check"></i></a>
+                                    @if ($token->status == 0)
+                                        <a href="{{ url("admin/token/complete/$token->id") }}"  class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')" title="Now Serving"><i class="fa fa-check"></i></a>
+                                    @else
+                                        <a href="{{ url("admin/token/complete/$token->id") }}"  class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')" title="Complete"><i class="fa fa-check"></i></a>
+                                    @endif
+                                    
                                     {{-- <button type="button" data-toggle="modal" data-target=".transferModal" data-token-id='{{ $token->id }}' class="btn btn-primary btn-sm" title="Transfer"><i class="fa fa-exchange"></i></button>  --}}
 
                                     {{-- <a href="{{ url("admin/token/stoped/$token->id") }}"  class="btn btn-warning btn-sm" onclick="return confirm('Are you sure?')" title="Stoped"><i class="fa fa-stop"></i></a> --}}

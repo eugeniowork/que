@@ -52,6 +52,7 @@ Route::prefix('common')
 	Route::get('jobs/sms', 'CronjobController@sms');
 
 	# display 
+	Route::post('display_waiting','DisplayController@display_waiting');  
 	Route::get('display','DisplayController@display');  
 	Route::post('display1', 'DisplayController@display1');  
 	Route::post('display2','DisplayController@display2');  
