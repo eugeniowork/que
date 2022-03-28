@@ -52,16 +52,19 @@
                 </div>   
                 @endif
 
-                <div class="form-group @error('department_id') has-error @enderror">
-                    <label for="department_id">{{ trans('app.department') }} <i class="text-danger">*</i></label><br/>
-                    {{ Form::select('department_id', $departments, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control department']) }}<br/>
-                    <span class="text-danger">{{ $errors->first('department_id') }}</span>
-                </div> 
-
                 <div class="form-group @error('course') has-error @enderror">
                     <label for="course">COURSE<i class="text-danger">*</i></label><br/>
-                    {{ Form::select('course', $course, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control']) }}<br/>
+                    {{ Form::select('course', $course, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control course']) }}<br/>
                     <span class="text-danger">{{ $errors->first('course') }}</span>
+                </div> 
+
+                <div class="form-group @error('department_id') has-error @enderror">
+                    <label for="department_id">{{ trans('app.department') }} <i class="text-danger">*</i></label><br/>
+                    {{-- {{ Form::select('department_id', $departments, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control department']) }}<br/> --}}
+                    <select class="select2 form-control department-id" name="department_id" disabled>
+                        
+                    </select><br/>
+                    <span class="text-danger">{{ $errors->first('department_id') }}</span>
                 </div> 
             </div>
 
@@ -76,7 +79,7 @@
                <div class="form-group @error('user_id') has-error @enderror">
                     <label for="user">{{ trans('WINDOW') }} <i class="text-danger">*</i></label><br/>
                     {{-- {{ Form::select('user_id', $officers, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control']) }} --}}
-                    <select class="select2 form-control user-id" name="user_id">
+                    <select class="select2 form-control user-id" name="user_id" disabled>
                         
                     </select><br/>
                     <span class="text-danger">{{ $errors->first('user_id') }}</span>
@@ -137,17 +140,66 @@
 <script type="text/javascript">
 $(document).ready(function(){
     var officers = JSON.parse('<?php echo $officers ?>');
+    var departments = JSON.parse('<?php echo $departments ?>');
+
+    $(".course").on("change", function(){
+        var course = $(this).val();
+        $(".department-id").empty()
+        if(course == "Computer Science" || course == "Information Technology"){
+            $.each(departments, function(row, data){
+                if(row == 1){
+                    $(".department-id").append("<option value="+row+">"+data+"</option>")
+                }
+
+            })
+
+        }
+        else if(course == "Accountancy" || course == "Accounting Information Systems"){
+            $.each(departments, function(row, data){
+                if(row == 2){
+                    $(".department-id").append("<option value="+row+">"+data+"</option>")
+                }
+            })
+        }
+        else if(course == "Elementary Education" || course == "Secondary Education (English Language Education)" || course == "Secondary Education (Math Education)" || course == "Secondary Education (Science Education)"){
+            $.each(departments, function(row, data){
+                if(row == 8){
+                    $(".department-id").append("<option value="+row+">"+data+"</option>")
+                }
+            })
+        }
+
+        $('.department-id').change();
+    })
+
+    $(".department-id").on("change", function(){
+        filter_window();
+    })
+
+    function filter_window(){
+        $(".user-id").empty()
+        $(".user-id").append("<option selected value=' ' disabled>Please select</option>")
+        $.each(officers, function(row, data){
+            if($('.department-id').val() == 1 && data.toLowerCase().includes("dci")){
+                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
+            }
+            else if($('.department-id').val() == 2 && data.toLowerCase().includes("dba")){
+                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
+            }
+            else if($('.department-id').val() == 8 && data.toLowerCase().includes("dte")){
+                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
+            }
+        })
+    }
     
     $(".register-type").on("change", function(e){
         $(".for-student").hide();
         $(".form-non-student").hide();
-        $(".user-id").empty()
 
         if($(this).val() != ""){
             if($(this).val() == "Student"){
                 $(".for-student").show();
                 $(".form-non-student").show();
-                //filter_window();
             }
             else{
                 $(".form-non-student").show();
@@ -161,26 +213,6 @@ $(document).ready(function(){
             }
         }
     })
-
-    $(".department").on("change", function(){
-        filter_window();
-    })
-
-    function filter_window(){
-        $(".user-id").empty()
-        $(".user-id").append("<option selected value=' ' disabled>Please select</option>")
-        $.each(officers, function(row, data){
-            if($('.department').val() == 1 && data.toLowerCase().includes("dci")){
-                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
-            }
-            else if($('.department').val() == 2 && data.toLowerCase().includes("dba")){
-                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
-            }
-            else if($('.department').val() == 8 && data.toLowerCase().includes("dte")){
-                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
-            }
-        })
-    }
 
     $(".btn-reset").on("click", function(){
         $("input select").val("")
