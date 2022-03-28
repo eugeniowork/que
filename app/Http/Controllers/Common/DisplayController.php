@@ -53,7 +53,8 @@ class DisplayController extends Controller
         elseif ($setting->display==2)
         {
             //counter wise display 1
-            return view('backend.common.display.display2', compact('setting'));
+            //return view('backend.common.display.display2', compact('setting'));
+            return view('backend.common.display.display_now_serving', compact('setting','appSetting', 'windows', 'date'));
         }
         else
         {
@@ -78,7 +79,7 @@ class DisplayController extends Controller
                 ->where('user_id', $key)
                 ->where('status', 0)
                 ->orderBy('id', 'ASC')
-                ->limit(12)
+                ->limit(15)
                 ->pluck('token_no', 'id');
 
             if(count($queues)){
@@ -90,6 +91,39 @@ class DisplayController extends Controller
         }
         $data['waiting_list'] = $waiting_list;
         $data['interval']   = 10000;
+        $data['status'] = true;
+
+        return Response::json($data);
+    }
+
+    public function display_now_serving(Request $request){
+
+        $windows = User::select(DB::raw('CONCAT(firstname, " ", lastname) as name'), 'id')
+            ->where('user_type',1)
+            ->where('status',1)
+            ->orderBy('firstname', 'ASC')
+            ->pluck('name', 'id');
+
+        $waiting_list = [];
+        foreach($windows as $key => $window){
+
+            $queues = Token::select(DB::raw('id, token_no'))
+                ->where('user_id', $key)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')
+                ->limit(15)
+                ->pluck('token_no', 'id');
+
+            if(count($queues)){
+                $waiting_list[] = [
+                    'window'=> strtoupper($window),
+                    'queues'=> $queues
+                ];
+            }
+        }
+        $data['waiting_list'] = $waiting_list;
+        $data['interval']   = 10000;
+        $data['status'] = true;
 
         return Response::json($data);
     }

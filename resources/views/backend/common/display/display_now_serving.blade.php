@@ -22,7 +22,7 @@
         <div class="panel-heading">
 	        <div class="row">
 	            <div class="col-sm-12">
-	                <h3>DISPLAY 1 - WAITING<button class="pull-right btn btn-sm btn-primary" onclick="goFullscreen('fullscreen'); return false"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button></h3> 
+	                <h3>DISPLAY 2 - NOW SERVING<button class="pull-right btn btn-sm btn-primary" onclick="goFullscreen('fullscreen'); return false"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button></h3> 
 	                <span class="text-danger">(enable full-screen mode and wait 10 seconds to adjust the screen)</span>
 	            </div> 
 	        </div>
@@ -66,7 +66,7 @@
 
 			$.ajax({
 				type:'post',
-				url:'{{ URL::to("common/display_waiting") }}',
+				url:'{{ URL::to("common/display_now_serving") }}',
 				data:{
 					_token: '<?php echo csrf_token() ?>',
 					view_token: view_token,

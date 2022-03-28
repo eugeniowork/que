@@ -54,7 +54,7 @@
 
                 <div class="form-group @error('department_id') has-error @enderror">
                     <label for="department_id">{{ trans('app.department') }} <i class="text-danger">*</i></label><br/>
-                    {{ Form::select('department_id', $departments, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control']) }}<br/>
+                    {{ Form::select('department_id', $departments, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control department']) }}<br/>
                     <span class="text-danger">{{ $errors->first('department_id') }}</span>
                 </div> 
 
@@ -147,13 +147,7 @@ $(document).ready(function(){
             if($(this).val() == "Student"){
                 $(".for-student").show();
                 $(".form-non-student").show();
-                $(".user-id").append("<option selected value=' ' disabled>Please select</option>")
-                $.each(officers, function(row, data){
-                    if(!data.toLowerCase().includes("non-student") && !data.toLowerCase().includes("non student") && !data.toLowerCase().includes("nonstudent")){
-                        $(".user-id").append("<option value="+row+">"+data+"</option>")
-                        console.log(data)
-                    }
-                })
+                //filter_window();
             }
             else{
                 $(".form-non-student").show();
@@ -167,6 +161,26 @@ $(document).ready(function(){
             }
         }
     })
+
+    $(".department").on("change", function(){
+        filter_window();
+    })
+
+    function filter_window(){
+        $(".user-id").empty()
+        $(".user-id").append("<option selected value=' ' disabled>Please select</option>")
+        $.each(officers, function(row, data){
+            if($('.department').val() == 1 && data.toLowerCase().includes("dci")){
+                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
+            }
+            else if($('.department').val() == 2 && data.toLowerCase().includes("dba")){
+                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
+            }
+            else if($('.department').val() == 8 && data.toLowerCase().includes("dte")){
+                $(".user-id").append("<option selected value="+row+">"+data+"</option>")
+            }
+        })
+    }
 
     $(".btn-reset").on("click", function(){
         $("input select").val("")
