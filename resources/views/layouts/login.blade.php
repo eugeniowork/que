@@ -78,9 +78,9 @@
                 <span class="text-danger">{{ $errors->first('password') }}</span>
             </div>
         </div>
-        <div class="col-xs-6">
+        {{-- <div class="col-xs-6">
             @yield('info.language')
-        </div>
+        </div> --}}
         <div class="col-xs-6">
           <button type="submit" class="btn btn-block btn-primary">{{ trans('app.signin')}}</button>
         </div> 

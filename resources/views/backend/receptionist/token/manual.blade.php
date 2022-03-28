@@ -9,14 +9,14 @@
                 <h3>{{ trans('REGISTER') }}</h3>
             </li>         
             <li class="col-xs-2 p-0 text-right">
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#infoModal">
+                {{-- <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#infoModal">
                   <i class="fa fa-info-circle"></i>
-                </button>
+                </button> --}}
             </li> 
         </ul>
     </div> 
 
-    <div class="panel-body">
+    <div class="panel-body" style="margin-left: 290px;">
 
         <div id="output" class="hide alert alert-danger alert-dismissible fade in shadowed mb-1"></div>
 
@@ -72,7 +72,10 @@
             <div class="form-non-student" style="display: none">
                 <div class="form-group @error('counter_id') has-error @enderror">
                     <label for="user">{{ trans('SELECT TRANSACTION') }} <i class="text-danger">*</i></label><br/>
-                    {{ Form::select('counter_id', $counters, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control']) }}<br/>
+                    {{-- {{ Form::select('counter_id', $counters, null, ['placeholder' => 'Select Option', 'class'=>'select2 form-control']) }}<br/> --}}
+                    <select class="select2 form-control counter-id" name="counter_id">
+                        
+                    </select><br/>
                     <span class="text-danger">{{ $errors->first('counter_id') }}</span>
                 </div>
 
@@ -141,6 +144,7 @@
 $(document).ready(function(){
     var officers = JSON.parse('<?php echo $officers ?>');
     var departments = JSON.parse('<?php echo $departments ?>');
+    var counters = JSON.parse('<?php echo $counters ?>');
 
     $(".course").on("change", function(){
         var course = $(this).val();
@@ -208,7 +212,22 @@ $(document).ready(function(){
                         $(".user-id").append("<option selected value="+row+">"+data+"</option>")
                         console.log(data)
                     }
+                })
+            }
+             $(".counter-id").empty()
+            if($(this).val() == "Visitor"){
+                $.each(counters, function(row, data){
+                    if(row == 25){
+                        $(".counter-id").append("<option value="+row+">"+data+"</option>")
+                        console.log(data)
+                    }
                     
+                })
+            }
+            else{
+                $.each(counters, function(row, data){
+                    $(".counter-id").append("<option value="+row+">"+data+"</option>")
+                    console.log(data)
                 })
             }
         }

@@ -51,8 +51,8 @@ class SettingController extends Controller
             'phone'       => 'max:255',
             'address'     => 'max:255',
             'copyright_text' => 'max:255',
-            'lang'        => 'max:3',
-            'timezone'    => 'required|max:100' 
+            //'lang'        => 'max:3',
+            //'timezone'    => 'required|max:100' 
         ])
         ->setAttributeNames(array(
            'title' => trans('app.title'),
@@ -63,8 +63,8 @@ class SettingController extends Controller
            'phone' => trans('app.mobile'),
            'address' => trans('app.address'),
            'copyright_text' => trans('app.copyright_text'),
-           'lang' => trans('app.lang'),
-           'timezone' => trans('app.timezone'),
+           //'lang' => trans('app.lang'),
+           //'timezone' => trans('app.timezone'),
         )); 
 
 

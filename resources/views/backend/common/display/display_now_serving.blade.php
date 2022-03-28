@@ -22,7 +22,7 @@
         <div class="panel-heading">
 	        <div class="row">
 	            <div class="col-sm-12">
-	                <h3>DISPLAY 2 - NOW SERVING<button class="pull-right btn btn-sm btn-primary" onclick="goFullscreen('fullscreen'); return false"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button></h3> 
+	                <h3 style="font-size: 50px">NOW SERVING LINE<button class="pull-right btn btn-sm btn-primary" onclick="goFullscreen('fullscreen'); return false"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button></h3> 
 	                <span class="text-danger">(enable full-screen mode and wait 10 seconds to adjust the screen)</span>
 	            </div> 
 	        </div>
@@ -79,7 +79,7 @@
 					append += "<div class='row'>"
 						$.each(response.waiting_list, function(key, data){
 							append += '<div class="col-sm-6" >'
-								append += '<div style="min-height:270px;background:{{$background_color}};padding: 10px 10px; margin-bottom:10px;">'
+								append += '<div style="min-height:270px;background:{{$background_color}};border:1px solid {{$border_color}};padding: 10px 10px; margin-bottom:10px;">'
 									append += '<p style="font-size: 32px; font-weight:600">'+data.window+'</p>'
 									append += '<div class="items" style="column-count: 3; width: 500px;">'
 										$.each(data.queues, function(key, data1){
@@ -93,7 +93,7 @@
 
 					$("#display1").html(append);
 
-					setTimeout(display, response.interval);
+					//setTimeout(display, response.interval);
 				}
 			});
 		};

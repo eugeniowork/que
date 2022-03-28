@@ -60,7 +60,7 @@
                 <span class="text-danger">{{ $errors->first('copyright_text') }}</span>
             </div>
 
-            <div class="form-group @error('language') has-error @enderror">
+            {{-- <div class="form-group @error('language') has-error @enderror">
                 @include('backend.common.info')
                 <label for="lang-select">{{ trans('app.language') }} </label>
                 @yield('language')
@@ -72,7 +72,7 @@
                 {{ Form::select('timezone', $timezoneList, (old('timezone')?old(
                                 'timezone'):$setting->timezone) , [ 'class'=>'select2 form-control', "id"=>'timezone']) }}<br/>
                 <span class="text-danger">{{ $errors->first('timezone') }}</span>
-            </div> 
+            </div>  --}}
 
             <div class="form-group @error('favicon') has-error @enderror">
                 <label for="favicon">{{ trans('app.favicon') }} </label>
