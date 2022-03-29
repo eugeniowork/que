@@ -106,8 +106,8 @@ class SettingController extends Controller
                         'phone'       => $request->phone,
                         'address'     => $request->address,
                         'copyright_text' => $request->copyright_text, 
-                        'language'    => $request->lang, 
-                        'timezone'    => $request->timezone 
+                        //'language'    => $request->lang, 
+                        //'timezone'    => $request->timezone 
                     ]);
 
                 if ($update) 
@@ -119,7 +119,7 @@ class SettingController extends Controller
                         'title'   => $app->title, 
                         'favicon' => $app->favicon, 
                         'logo'    => $app->logo, 
-                        'timezone' => $request->timezone,
+                        //'timezone' => $request->timezone,
                         'copyright_text' => $app->copyright_text, 
                     ));
 

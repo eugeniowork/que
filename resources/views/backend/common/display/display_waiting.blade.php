@@ -78,10 +78,11 @@
 					var append = "";
 					append += "<div class='row'>"
 						$.each(response.waiting_list, function(key, data){
-							append += '<div class="col-sm-6" >'
-								append += '<div style="min-height:270px;background:{{$background_color}};border:1px solid {{$border_color}};padding: 10px 10px; margin-bottom:10px;">'
-									append += '<p style="font-size: 32px; font-weight:600">'+data.window+'</p>'
-									append += '<div class="items" style="column-count: 3; width: 500px;">'
+							append += '<div class="col-sm-3" >'
+								append += '<p style="font-size: 32px; font-weight:600;background:{{$background_color}};border:1px solid {{$border_color}};padding: 10px 10px;border-radius:5px">'+data.window+'</p>'
+								append += '<div style="min-height:330px;background:{{$background_color}};border:1px solid {{$border_color}};padding: 10px 10px; margin-bottom:10px;border-radius:5px">'
+									
+									append += '<div class="items" style="column-count: 2; width: 400px;">'
 										$.each(data.queues, function(key, data1){
 											append += '<p style="font-size: 28px">#'+data1+'</p>'
 										})

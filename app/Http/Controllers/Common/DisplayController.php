@@ -79,7 +79,7 @@ class DisplayController extends Controller
                 ->where('user_id', $key)
                 ->where('status', 0)
                 ->orderBy('id', 'ASC')
-                ->limit(15)
+                ->limit(10)
                 ->pluck('token_no', 'id');
 
             if(count($queues)){
@@ -111,7 +111,7 @@ class DisplayController extends Controller
                 ->where('user_id', $key)
                 ->where('status', 1)
                 ->orderBy('id', 'ASC')
-                ->limit(15)
+                ->limit(10)
                 ->pluck('token_no', 'id');
 
             if(count($queues)){
